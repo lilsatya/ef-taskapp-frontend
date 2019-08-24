@@ -5,7 +5,7 @@ import AsyncRoute from './async-route'
 const Home = AsyncRoute(() => import('../Containers/Home'))
 const About = AsyncRoute(() => import('../Containers/About'))
 
-function index({ childProps = null }) {
+function Routes({ childProps = null }) {
   return (
     <Switch>
       <Route exact path="/" component={Home} props={childProps} />
@@ -14,4 +14,4 @@ function index({ childProps = null }) {
   );
 }
 
-export default index;
+export default Routes;

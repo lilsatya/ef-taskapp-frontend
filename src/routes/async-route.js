@@ -6,7 +6,7 @@ export default function asyncRoutes(importComponent) {
       super(props)
       this.state = {
         component: null,
-      };
+      }
     }
     async componentDidMount() {
       const { default: component } = await importComponent()
@@ -14,7 +14,7 @@ export default function asyncRoutes(importComponent) {
     }
     render() {
       const Comp = this.state.component
-      return Comp ? <Comp {...this.props} /> : null
+      return Comp ? <Comp { ...this.props } /> : null
     }
   }
 

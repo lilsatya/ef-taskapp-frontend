@@ -1,3 +1,5 @@
 import { combineReducers } from 'redux'
 
-export default combineReducers({})
+export default combineReducers({
+  user: require('./user').reducer
+})
