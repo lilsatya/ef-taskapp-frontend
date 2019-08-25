@@ -26,23 +26,52 @@ export default {
     small: '0 0 4px rgba(0, 0, 0, .125)',
     large: '0 0 24px rgba(0, 0, 0, .125)'
   },
-  variants: {
+  input: {
+    borderColor: colors.lines
+  },
+  select: {
+    borderColor: colors.lines
+  },
+  textarea: {
+    borderColor: colors.lines
   },
   text: {
-    color: colors.text,
+    color: colors.dark,
     error: {
-      color: colors.error
+      color: colors.red
     }
   },
   buttons: {
     primary: {
-      color: colors.text,
+      color: colors.white,
       bg: colors.main,
+      boxShadow: 'small'
+    }
+  },
+  variants: {
+    listContainer: {
+      borderRadius: 10,
+      bg: colors.white,
+      p: 8
+    },
+    listItemContainer: {
+      borderRadius: 5,
+      bg: colors.background,
+      p: 10,
+      boxShadow: 'small'
+    },
+    tag: {
+      display: 'inline-block',
+      p: 2,
+      mr: 1,
+      borderRadius: 20,
+      bg: colors.third,
+      color: colors.white
     }
   },
   modal: {
     content: {
-      height: '70%',
+      height: '85%',
       width: '50%',
       left: '50%',
       right: 'auto',
