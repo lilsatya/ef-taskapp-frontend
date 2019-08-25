@@ -1,4 +1,5 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { Box, Button, Text, Heading } from 'rebass'
 import { Label, Input, Textarea, Select } from '@rebass/forms'
 import DatePicker from 'react-date-picker'
@@ -7,13 +8,14 @@ import Modal from 'react-modal'
 import theme from '../../Theme'
 import { ModelValidator } from '../../Models/Tasks'
 import text from './text'
+import { selector as AppSelector } from '../../Redux/app'
 
 import ReactTags from '../TagInput'
 
 Modal.setAppElement('#root') // for accessibility
 
 const Index = props => {
-  const { opened, onSubmit, onClose, userList, initialValues, tagList } = props
+  const { taskDetail, opened, onSubmit, onClose, userList, initialValues, tagList } = props
   const userListMapped = userList.map((user) => {
     return (<option key={user.id} value={ JSON.stringify(user) }>{user.username}</option>)
   })
@@ -28,7 +30,7 @@ const Index = props => {
     >
       <Heading mb={10} fontSize={3}>{text.label}</Heading>
       <Formik
-        initialValues={initialValues}
+        initialValues={taskDetail || initialValues}
         onSubmit={values => onSubmit(values)}
         validationSchema={ModelValidator}
         render={props => {
@@ -113,8 +115,16 @@ const Index = props => {
               <Button
                 variant='primary'
                 type='submit'
+                mr={10}
               >
                 Submit
+              </Button>
+              <Button
+                type='reset'
+                variant='primary'
+                onClick={onClose}
+              >
+                Close
               </Button>
             </form>
           )}
@@ -124,4 +134,11 @@ const Index = props => {
   )
 }
 
-export default Index
+const mapStateToProps = (state) => ({
+  taskDetail: AppSelector.selectTaskDetail(state)
+})
+
+export default connect(
+  mapStateToProps, 
+  null
+)(Index)

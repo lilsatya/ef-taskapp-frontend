@@ -1,20 +1,24 @@
 import React from 'react'
 import { Box, Heading, Flex, Text } from 'rebass'
+import { Detector } from 'react-detect-offline'
 import colors from '../../Theme/colors'
+import textContent from './text'
 
 const Index = props => (
   <Box
     p={20}
-    mb={10}
     width={1}
     bg={colors.main}
+    sx={{
+      position: 'fixed'
+    }}
   >
     <Flex
       alignItems='center'
       justifyContent='space-between'
     >
       <Box
-        width={8/10}
+        width={7/10}
       >
         <Heading
           fontSize={4}
@@ -23,18 +27,24 @@ const Index = props => (
         </Heading>
       </Box>
       <Box
-        width={1/10}
+        width={3/10}
       >
-        <Text>
-          Sign In
-        </Text>
-      </Box>
-      <Box
-        width={1/10}
-      >
-        <Text>
-          Register
-        </Text>
+        <Detector
+          render={({ online }) => (
+            <Text
+              p={10}
+              color={online ? colors.white : colors.red}
+              sx={{
+                borderWidth: '1px',
+                borderStyle: 'solid',
+                borderRadius: '5px',
+                borderColor: online ? colors.white : colors.red,
+              }}
+            >
+              {online ? textContent.HOME_TEXT_ONLINE : textContent.HOME_TEXT_OFFLINE}
+            </Text>
+          )}
+        />
       </Box>
     </Flex>
   </Box>

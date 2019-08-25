@@ -3,7 +3,7 @@ import colors from './colors'
 export default {
   breakpoints: ['40em', '52em', '64em'],
   fontSizes: [
-    12, 14, 16, 20, 24, 32, 48, 64
+    10, 12, 14, 16, 18, 32, 48, 64
   ],
   space: [
     0, 4, 8, 16, 32, 64, 128, 256
@@ -39,6 +39,10 @@ export default {
     color: colors.dark,
     error: {
       color: colors.red
+    },
+    subtitle: {
+      fontSize: 14,
+      fontWeight: 'bold'
     }
   },
   buttons: {
@@ -49,6 +53,9 @@ export default {
     }
   },
   variants: {
+    inline: {
+      display: 'inline-block'
+    },
     listContainer: {
       borderRadius: 10,
       bg: colors.white,
@@ -66,7 +73,13 @@ export default {
       mr: 1,
       borderRadius: 20,
       bg: colors.third,
-      color: colors.white
+      color: colors.white,
+      fontSize: 11
+    },
+    onlineStatus: {
+      borderColor: colors.main,
+      borderRadius: 2,
+      padding: 10
     }
   },
   modal: {

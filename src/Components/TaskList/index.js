@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { Flex, Box } from 'rebass'
+import { Flex } from 'rebass'
 import { TASK_STATUS_BACKLOG, TASK_STATUS_IN_PROGRESS, TASK_STATUS_COMPLETED, LABEL_TASK_STATUS } from '../../Config/task-status'
 import TaskListSingle from '../TaskListSingle'
 
+// Worst kind of categorizing! I might create backend for this if the time is enough
 const initialState = {
   [TASK_STATUS_BACKLOG]: [],
   [TASK_STATUS_IN_PROGRESS]: [],

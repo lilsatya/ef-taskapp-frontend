@@ -1,17 +1,22 @@
-import React, { memo } from 'react'
-import { Box, Button } from 'rebass'
+import React from 'react'
+import { Box, Button, Text, Flex } from 'rebass'
 import { push } from 'connected-react-router'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import { Detector } from 'react-detect-offline'
 import Model, { InitialValues } from '../../Models/Tasks'
-import { DB_TASKS } from '../../Config/db-names'
 import { selector as UserSelector } from '../../Redux/user'
+import { actions as AppActions, selector as AppSelector } from '../../Redux/app'
+import textContent from './text'
 
 // Components
 import Frame from '../../Components/Frame'
+import TaskCard from '../../Components/TaskCard'
 import TaskModalAdd from '../../Components/TaskModalAdd'
 import TaskList from '../../Components/TaskList'
+import colors from '../../Theme/colors'
 
+// Combining tags fetched from all tasks for the tag input suggestion
 const combineTags = (data, index = data.length - 1, tags = []) => {
   if (index < 0) {
     return tags
@@ -98,20 +103,18 @@ class Index extends React.PureComponent {
   }
 
   handleModalClose = () => {
-    this.setState({
-      taskAddOpened: false,
-      taskDetailOpened: false
-    })
+    const { handleModalCloseAll } = this.props
+    handleModalCloseAll()
   }
 
   render() {
-    const { changePage, user, userList } = this.props
-    const { date, values, loading, taskAddOpened, tagList } = this.state
+    const { changePage, user, userList, handleModalTaskOpen, modalTaskOpened, modalTaskDetailOpened, taskDetail } = this.props
+    const { date, values, loading, tagList } = this.state
 
     return (
       <Frame loading={loading}>
         <TaskModalAdd
-          opened={taskAddOpened}
+          opened={modalTaskOpened}
           initialValues={InitialValues}
           onClose={this.handleModalClose}
           onSubmit={this.handleSubmit}
@@ -119,30 +122,52 @@ class Index extends React.PureComponent {
           tagList={tagList}
           values={values}
         />
+        <TaskCard
+          opened={modalTaskDetailOpened}
+          onClose={this.handleModalClose}
+          task={taskDetail}
+        />
         <Box
           width={1}
         >
           <h3>Welcome, {user.username}!</h3>
           <p>{date.toString()}</p>
         </Box>
-        <Box
-          width={1}
-        >
-          <Button
-            variant='primary'
-            mr={2}
-            onClick={() => this.setState({ taskAddOpened: true })}
-          >
-            Add Item
-          </Button>
-          <Button
-            variant='primary'
-            onClick={this.handleUpload}
-          >
-            Upload List
-          </Button>
-          <TaskList taskList={Model.data} />
-        </Box>
+          <Detector
+            render={({ online }) => {
+              return (
+                <Flex
+                  width={1}
+                  variant='inline'
+                >
+                  <Box
+                    width={1}
+                  >
+                    <Button
+                      variant='primary'
+                      mr={2}
+                      onClick={() => handleModalTaskOpen(true)}
+                    >
+                      {textContent.HOME_TEXT_BUTTON_ADD_ITEM}
+                    </Button>
+                    <Button
+                      variant='primary'
+                      onClick={this.handleUpload}
+                      disabled={!online}
+                      sx={{
+                        ':disabled': {
+                          backgroundColor: colors.lines,
+                        }
+                      }}
+                    >
+                      {textContent.HOME_TEXT_BUTTON_UPLOAD_LIST}
+                    </Button>
+                  </Box>
+                </Flex>
+              )
+            }}
+          />
+        <TaskList taskList={Model.data} />
       </Frame>
     )
   }
@@ -150,11 +175,16 @@ class Index extends React.PureComponent {
 
 const mapStateToProps = (state) => ({
   user: UserSelector.selectData(state),
-  userList: UserSelector.selectUsers(state)
+  userList: UserSelector.selectUsers(state),
+  modalTaskOpened: AppSelector.selectModalTaskOpened(state),
+  modalTaskDetailOpened: AppSelector.selectModalTaskDetailOpened(state),
+  taskDetail: AppSelector.selectTaskDetail(state)
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  changePage: (route) => push(route)
+  changePage: (route) => push(route),
+  handleModalTaskOpen: (open) => AppActions.ModalTaskOpen(open),
+  handleModalCloseAll: () => AppActions.ModalTaskCloseAll()
 }, dispatch)
 
 export default connect(

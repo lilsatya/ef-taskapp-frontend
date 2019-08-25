@@ -9,6 +9,7 @@ const Index = props => {
     <ThemeProvider theme={theme}>
       <Header />
       <Box
+        pt={100}
         width={1}
       >
         <Box
