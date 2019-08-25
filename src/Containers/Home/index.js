@@ -32,11 +32,13 @@ const combineTags = (data, index = data.length - 1, tags = []) => {
   }
 }
 
+const lastSync = localStorage.getItem('lastSync')
+
 class Index extends React.PureComponent {
   state = {
     unsub: null, // using state because using direct object isn't working
     taskList: [],
-    date: new Date(),
+    lastSyncDate: lastSync ? new Date(JSON.parse(lastSync)) : 'Never',
     loading: false,
     taskAddOpened: false,
     taskDetailOpened: false,
@@ -79,7 +81,7 @@ class Index extends React.PureComponent {
     const { handleTaskListSave } = this.props
 
     this.setState({
-      date: new Date()
+      lastSyncDate: new Date(JSON.parse(localStorage.getItem('lastSync')))
     })
     handleTaskListSave(Model.data)
   }
@@ -145,6 +147,7 @@ class Index extends React.PureComponent {
     await Model.upload()
 
     alert(textContent.HOME_TEXT_ALERT_SYNC_COMPLETE)
+    localStorage.setItem('lastSync', JSON.stringify(new Date()))
   }
 
   handleModalClose = () => {
@@ -154,7 +157,7 @@ class Index extends React.PureComponent {
 
   render() {
     const { user, userList, handleModalTaskOpen, modalTaskOpened, modalTaskDetailOpened, taskDetail, taskList } = this.props
-    const { date, loading, tagList } = this.state
+    const { lastSyncDate, loading, tagList } = this.state
 
     return (
       <Frame loading={loading}>
@@ -178,7 +181,7 @@ class Index extends React.PureComponent {
           width={1}
         >
           <h3>Welcome, {user.username}!</h3>
-          <p>{date.toString()}</p>
+          <p>Last Sync Date: {lastSyncDate ? lastSyncDate.toString() : 'Never'}</p>
         </Box>
           <Detector
             render={({ online }) => {
