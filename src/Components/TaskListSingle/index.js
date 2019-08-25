@@ -1,12 +1,12 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { Box, Card, Text, Heading, Flex, Button } from 'rebass'
+import { Box, Card, Text, Heading, Flex } from 'rebass'
 import dateFormatter from '../../Utils/date-formatter'
 import colors from '../../Theme/colors'
-import text from './text'
 import { actions as AppActions } from '../../Redux/app'
 import useDebounce from '../../Utils/react-debounce'
+import { TASK_STATUS_COMPLETED } from '../../Config/task-status'
 
 
 const Index = props => {
@@ -48,11 +48,11 @@ const Index = props => {
               
               <Box>
                 <Text fontSize={12} textAlign='right' mb={10}>{task.assignee.username}</Text>
-                <Text fontSize={12} textAlign='right' color={colors.red}>{overdue && 'OVERDUE'}</Text>
+                <Text fontSize={12} textAlign='right' color={colors.red}>{overdue && task.status !== TASK_STATUS_COMPLETED &&  'OVERDUE'}</Text>
               </Box>
             </Flex>
             <hr />
-            <Text fontSize={14} mb={30}>{task.description}</Text>
+            <Text fontSize={14} mb={30}>{`${task.description.slice(0, 100)}`}</Text>
             <Text>
               {task.tags.map((tag, index) => {
                 return (
@@ -60,28 +60,6 @@ const Index = props => {
                 )
               })}
             </Text>
-            <Box
-              mt={20}
-            >
-              <Button
-                variant='primary'
-                mr={2}
-                p={2}
-                fontSize={10}
-                onClick={() => this.setState({ taskAddOpened: true })}
-              >
-                {text.TASK_LIST_TEXT_BUTTON_EDIT}
-              </Button>
-              <Button
-                variant='primary'
-                mr={2}
-                p={2}
-                fontSize={10}
-                onClick={() => this.setState({ taskAddOpened: true })}
-              >
-                {text.TASK_LIST_TEXT_BUTTON_REMOVE}
-              </Button>
-            </Box>
           </Card>
         )
       }))

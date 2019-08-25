@@ -4,19 +4,18 @@ import { TASK_STATUS_BACKLOG, TASK_STATUS_IN_PROGRESS, TASK_STATUS_COMPLETED, LA
 import TaskListSingle from '../TaskListSingle'
 
 // Worst kind of categorizing! I might create backend for this if the time is enough
-const initialState = {
-  [TASK_STATUS_BACKLOG]: [],
-  [TASK_STATUS_IN_PROGRESS]: [],
-  [TASK_STATUS_COMPLETED]: []
-}
-
 const Index = props => {
-  const [taskListCategorized, setTaskListCategorized] = useState(initialState)
+  const [taskListMapped, setTaskListMapped] = useState([<></>])
 
   useEffect(() => {
-    const filterTaskList = async () => {
-      const taskList = initialState
-      await props.taskList.forEach(task => {
+    const taskList = {
+      [TASK_STATUS_BACKLOG]: [],
+      [TASK_STATUS_IN_PROGRESS]: [],
+      [TASK_STATUS_COMPLETED]: []
+    }
+
+    const filterTaskList = () => {
+      props.taskList.forEach(task => {
         switch (task.status) {
           case TASK_STATUS_BACKLOG:
             if (taskList[TASK_STATUS_BACKLOG].filter(val => val._id === task._id).length < 1 ) {
@@ -37,22 +36,21 @@ const Index = props => {
             return false
         }
       })
-
-      setTaskListCategorized(taskList)
     }
 
     filterTaskList()
-  })
+    const map = Object.keys(taskList).map((category, index) => {
+      return (
+        <TaskListSingle
+          key={index}
+          tasks={taskList[category].sort((a, b) => new Date(b.dirtyAt) - new Date(a.dirtyAt))} // sort by latest update
+          label={LABEL_TASK_STATUS[category]}
+        />
+      )
+    })
 
-  const taskListMapped = Object.keys(taskListCategorized).map((category, index) => {
-    return (
-      <TaskListSingle
-        key={index}
-        tasks={taskListCategorized[category].sort((a, b) => new Date(b.dirtyAt) - new Date(a.dirtyAt))} // sort by latest update
-        label={LABEL_TASK_STATUS[category]}
-      />
-    )
-  })
+    setTaskListMapped(map)
+  }, [props.taskList])
 
   return (
     <Flex

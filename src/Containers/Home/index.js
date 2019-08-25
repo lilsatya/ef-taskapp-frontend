@@ -34,6 +34,7 @@ const combineTags = (data, index = data.length - 1, tags = []) => {
 class Index extends React.PureComponent {
   state = {
     unsub: null, // using state because using direct object isn't working
+    taskList: [],
     date: new Date(),
     loading: false,
     taskAddOpened: false,
@@ -74,25 +75,47 @@ class Index extends React.PureComponent {
   }
 
   handleUpdate = () => {
-    this.setState({ date: new Date() })
+    const { handleTaskListSave } = this.props
+
+    this.setState({
+      date: new Date()
+    })
+    handleTaskListSave(Model.data)
   }
 
-  handleSubmit = async values => {
+  handleRemove = async id => {
+    try {
+      await Model.deleteItem(id)
+
+      alert(textContent.HOME_TEXT_ALERT_TASK_DELETED)
+      this.handleModalClose()
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  handleSubmit = async (values, taskDetail) => {
     const { user } = this.props
     const { title, assignee, description, status, dueDate, tags } = values
+    const body = {
+      title,
+      assignee: JSON.parse(assignee), // option only limited to string and numbers, so i did stringify + parse
+      reporter: user,
+      description,
+      status,
+      dueDate,
+      tags
+    }
 
     try {
-      await Model.addItem({
-        title,
-        assignee: JSON.parse(assignee), // option only limited to string and numbers, so i did stringify + parse
-        reporter: user,
-        description,
-        status,
-        dueDate,
-        tags
-      })
+      if (taskDetail) {
+        await Model.editItem(taskDetail._id, body)
+      } else {
+        await Model.addItem(body)
+      }
 
-      this.setState({ taskAddOpened: false })
+      alert(taskDetail ? textContent.HOME_TEXT_ALERT_TASK_UPDATED : textContent.HOME_TEXT_ALERT_TASK_CREATED)
+      this.handleModalClose()
     } catch (err) {
       console.log(err)
     }
@@ -100,6 +123,8 @@ class Index extends React.PureComponent {
 
   handleUpload = async () => {
     await Model.upload()
+
+    alert(textContent.HOME_TEXT_ALERT_SYNC_COMPLETE)
   }
 
   handleModalClose = () => {
@@ -108,11 +133,18 @@ class Index extends React.PureComponent {
   }
 
   render() {
-    const { changePage, user, userList, handleModalTaskOpen, modalTaskOpened, modalTaskDetailOpened, taskDetail } = this.props
-    const { date, values, loading, tagList } = this.state
+    const { changePage, user, userList, handleModalTaskOpen, modalTaskOpened, modalTaskDetailOpened, taskDetail, taskList } = this.props
+    const { date, loading, tagList } = this.state
 
     return (
       <Frame loading={loading}>
+        <TaskCard
+          opened={modalTaskDetailOpened}
+          onClose={this.handleModalClose}
+          onEdit={handleModalTaskOpen}
+          onRemove={this.handleRemove}
+          task={taskDetail}
+        />
         <TaskModalAdd
           opened={modalTaskOpened}
           initialValues={InitialValues}
@@ -120,12 +152,6 @@ class Index extends React.PureComponent {
           onSubmit={this.handleSubmit}
           userList={userList}
           tagList={tagList}
-          values={values}
-        />
-        <TaskCard
-          opened={modalTaskDetailOpened}
-          onClose={this.handleModalClose}
-          task={taskDetail}
         />
         <Box
           width={1}
@@ -167,7 +193,7 @@ class Index extends React.PureComponent {
               )
             }}
           />
-        <TaskList taskList={Model.data} />
+        <TaskList taskList={taskList} />
       </Frame>
     )
   }
@@ -178,12 +204,14 @@ const mapStateToProps = (state) => ({
   userList: UserSelector.selectUsers(state),
   modalTaskOpened: AppSelector.selectModalTaskOpened(state),
   modalTaskDetailOpened: AppSelector.selectModalTaskDetailOpened(state),
-  taskDetail: AppSelector.selectTaskDetail(state)
+  taskDetail: AppSelector.selectTaskDetail(state),
+  taskList: AppSelector.selectTaskList(state)
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   changePage: (route) => push(route),
-  handleModalTaskOpen: (open) => AppActions.ModalTaskOpen(open),
+  handleTaskListSave: taskList => AppActions.TaskListSave(taskList),
+  handleModalTaskOpen: (open, task) => AppActions.ModalTaskOpen(open, task),
   handleModalCloseAll: () => AppActions.ModalTaskCloseAll()
 }, dispatch)
 

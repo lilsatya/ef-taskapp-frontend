@@ -19,6 +19,11 @@ const Index = props => {
   const userListMapped = userList.map((user) => {
     return (<option key={user.id} value={ JSON.stringify(user) }>{user.username}</option>)
   })
+  const initialValuesEdit = taskDetail && {
+    ...taskDetail,
+    assignee: JSON.stringify(taskDetail.assignee),
+    dueDate: new Date(taskDetail.dueDate)
+  }
 
   return (
     <Modal
@@ -28,10 +33,10 @@ const Index = props => {
       shouldCloseOnOverlayClick={true}
       style={theme.modal}
     >
-      <Heading mb={10} fontSize={3}>{text.label}</Heading>
+      <Heading mb={10} fontSize={3}>{taskDetail ? text.LABEL_EDIT : text.LABEL_ADD}</Heading>
       <Formik
-        initialValues={taskDetail || initialValues}
-        onSubmit={values => onSubmit(values)}
+        initialValues={initialValuesEdit || initialValues}
+        onSubmit={values => onSubmit(values, taskDetail)}
         validationSchema={ModelValidator}
         render={props => {
           return (

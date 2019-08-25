@@ -1,4 +1,8 @@
 export default {
   HOME_TEXT_BUTTON_ADD_ITEM: 'Add Item',
-  HOME_TEXT_BUTTON_UPLOAD_LIST: 'Upload List'
+  HOME_TEXT_BUTTON_UPLOAD_LIST: 'Sync List',
+  HOME_TEXT_ALERT_TASK_DELETED: 'Task Deleted',
+  HOME_TEXT_ALERT_TASK_CREATED: 'Task Created',
+  HOME_TEXT_ALERT_TASK_UPDATED: 'Task Updated',
+  HOME_TEXT_ALERT_SYNC_COMPLETE: 'Sync Completed'
 }
