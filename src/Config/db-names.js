@@ -1,1 +1,1 @@
-export const DB_TASKS = 'tasks'
+export const DB_TASKS = 'lil_tasks'

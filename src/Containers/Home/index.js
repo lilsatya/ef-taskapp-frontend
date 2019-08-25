@@ -80,9 +80,6 @@ class Index extends React.PureComponent {
   handleUpdate = () => {
     const { handleTaskListSave } = this.props
 
-    this.setState({
-      lastSyncDate: new Date(JSON.parse(localStorage.getItem('lastSync')))
-    })
     handleTaskListSave(Model.data)
   }
 
@@ -144,10 +141,14 @@ class Index extends React.PureComponent {
   }
 
   handleUpload = async () => {
+    const today = new Date()
     await Model.upload()
 
     alert(textContent.HOME_TEXT_ALERT_SYNC_COMPLETE)
-    localStorage.setItem('lastSync', JSON.stringify(new Date()))
+    localStorage.setItem('lastSync', JSON.stringify(today))
+    this.setState({
+      lastSyncDate: today
+    })
   }
 
   handleModalClose = () => {
