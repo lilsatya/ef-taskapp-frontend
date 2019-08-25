@@ -16,7 +16,7 @@ Modal.setAppElement('#root') // for accessibility
 
 const Index = props => {
   const { taskDetail, opened, onSubmit, onClose, userList, initialValues, tagList } = props
-  const userListMapped = userList.map((user) => {
+  const userListMapped = userList.map(user => {
     return (<option key={user.id} value={ JSON.stringify(user) }>{user.username}</option>)
   })
   const initialValuesEdit = taskDetail && {

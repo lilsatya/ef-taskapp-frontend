@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Button, Text, Flex } from 'rebass'
+import { Box, Button, Flex } from 'rebass'
 import { push } from 'connected-react-router'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
@@ -8,6 +8,7 @@ import Model, { InitialValues } from '../../Models/Tasks'
 import { selector as UserSelector } from '../../Redux/user'
 import { actions as AppActions, selector as AppSelector } from '../../Redux/app'
 import textContent from './text'
+import { TASK_STATUS_COMPLETED } from '../../Config/task-status'
 
 // Components
 import Frame from '../../Components/Frame'
@@ -121,6 +122,25 @@ class Index extends React.PureComponent {
     }
   }
 
+  handleMoveCard = async (status, task) => {
+    const body = {
+      status
+    }
+
+    if (status === TASK_STATUS_COMPLETED) {
+      body.completedAt = new Date()
+    }
+
+    try {
+      await Model.editItem(task._id, body)
+
+      alert(textContent.HOME_TEXT_ALERT_TASK_UPDATED)
+      this.handleModalClose()
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
   handleUpload = async () => {
     await Model.upload()
 
@@ -133,7 +153,7 @@ class Index extends React.PureComponent {
   }
 
   render() {
-    const { changePage, user, userList, handleModalTaskOpen, modalTaskOpened, modalTaskDetailOpened, taskDetail, taskList } = this.props
+    const { user, userList, handleModalTaskOpen, modalTaskOpened, modalTaskDetailOpened, taskDetail, taskList } = this.props
     const { date, loading, tagList } = this.state
 
     return (
@@ -142,6 +162,7 @@ class Index extends React.PureComponent {
           opened={modalTaskDetailOpened}
           onClose={this.handleModalClose}
           onEdit={handleModalTaskOpen}
+          onMoveCard={this.handleMoveCard}
           onRemove={this.handleRemove}
           task={taskDetail}
         />

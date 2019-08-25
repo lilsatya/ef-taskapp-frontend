@@ -4,13 +4,63 @@ import Modal from 'react-modal'
 import theme from '../../Theme'
 import colors from '../../Theme/colors'
 import dateFormatter from '../../Utils/date-formatter'
-import { TASK_STATUS_COMPLETED, LABEL_TASK_STATUS } from '../../Config/task-status'
+import { TASK_STATUS_BACKLOG, TASK_STATUS_IN_PROGRESS, TASK_STATUS_COMPLETED, LABEL_TASK_STATUS } from '../../Config/task-status'
 
 Modal.setAppElement('#root') // for accessibility
 
 const Index = props => {
-  const { opened, onClose, onEdit, onRemove, task } = props
+  const { opened, onClose, onEdit, onMoveCard, onRemove, task } = props
   const overdue = task && new Date().getTime() > new Date(task.dueDate).getTime()
+  const isCompleted = task && task.status === TASK_STATUS_COMPLETED
+  const MoveButton = (props) => {
+    switch (props.task.status) {
+      case TASK_STATUS_BACKLOG:
+        return (
+          <Button
+            variant='primary'
+            bg={colors.fifth}
+            onClick={() => onMoveCard(TASK_STATUS_IN_PROGRESS, task)}
+            mr={10}
+          >
+            Move to {LABEL_TASK_STATUS[TASK_STATUS_IN_PROGRESS]}
+          </Button>
+        )
+      case TASK_STATUS_IN_PROGRESS:
+          return (
+            <>
+              <Button
+                variant='primary'
+                bg={colors.fifth}
+                onClick={() => onMoveCard(TASK_STATUS_BACKLOG, task)}
+                mr={10}
+              >
+                Move to {LABEL_TASK_STATUS[TASK_STATUS_BACKLOG]}
+              </Button>
+              <Button
+                variant='primary'
+                bg={colors.fifth}
+                onClick={() => onMoveCard(TASK_STATUS_COMPLETED, task)}
+                mr={10}
+              >
+                Move to {LABEL_TASK_STATUS[TASK_STATUS_COMPLETED]}
+              </Button>
+            </>
+          )
+      case TASK_STATUS_COMPLETED:
+          return (
+            <Button
+              variant='primary'
+              bg={colors.fifth}
+              onClick={() => onMoveCard(TASK_STATUS_IN_PROGRESS, task)}
+              mr={10}
+            >
+              Move to {LABEL_TASK_STATUS[TASK_STATUS_IN_PROGRESS]}
+            </Button>
+          )
+      default:
+        return <></>
+    }
+  }
 
   return (
     <Modal
@@ -49,10 +99,10 @@ const Index = props => {
           <hr />
           <Flex mb={50} justifyContent='space-between'>
             <Box>
-              <Text><b>Due on:</b> {dateFormatter(task.dueDate)}</Text>
+              <Text><b>{isCompleted ? 'Completed on :' : 'Due on :'}</b> {dateFormatter(isCompleted ? task.completedAt: task.dueDate)}</Text>
               <Text><b>Assignee:</b> {task.assignee && task.assignee.username}</Text>
               <Text pt={8}><b>{LABEL_TASK_STATUS[task.status]}</b></Text>
-              <Text pt={8} fontWeight='bold' fontSize={16} color={colors.red}>{overdue && task.status !== TASK_STATUS_COMPLETED && 'OVERDUE'}</Text>
+              <Text pt={8} fontWeight='bold' fontSize={16} color={colors.red}>{overdue && !isCompleted && 'OVERDUE'}</Text>
             </Box>
             <Box>
               <Text textAlign='right'><b>Reported on:</b> {dateFormatter(task.createdAt)}</Text>
@@ -70,12 +120,15 @@ const Index = props => {
             <Text><b>Tags</b></Text>
             <hr />
             <Box>
-              {task.tags && task.tags.map((tag, index) => {
+              {task.tags && task.tags.map(tag => {
                 return (
-                  <Box fontSize={14} key={index} variant='tag'>{tag}</Box>
+                  <Box fontSize={14} key={tag} variant='tag'>{tag}</Box>
                 )
               })}
             </Box>
+          </Box>
+          <Box>
+            <MoveButton task={task}/>
           </Box>
         </Box>
       )}

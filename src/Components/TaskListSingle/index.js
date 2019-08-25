@@ -21,15 +21,16 @@ const Index = props => {
     }
 
     if (debouncedListRender) {
-      setTasksMapped(tasks.map((task, index) => {
+      setTasksMapped(tasks.map(task => {
         const overdue = new Date().getTime() > new Date(task.dueDate).getTime()
+        const isCompleted = task.status === TASK_STATUS_COMPLETED
         return (
           <Card
             width={1}
             mb={10}
             variant='listItemContainer'
             onClick={() => handleModalOpen(task)}
-            key={index}
+            key={task._id}
           >
             <Flex
               justifyContent='space-between'
@@ -43,20 +44,20 @@ const Index = props => {
                 >
                   {task.title}
                 </Text>
-                <Text fontSize={12}>Due on: {dateFormatter(task.dueDate)}</Text>
+                <Text fontSize={12}>{isCompleted ? 'Completed on :' : 'Due on :'} {dateFormatter(isCompleted ? task.completedAt: task.dueDate)}</Text>
               </Box>
               
               <Box>
                 <Text fontSize={12} textAlign='right' mb={10}>{task.assignee.username}</Text>
-                <Text fontSize={12} textAlign='right' color={colors.red}>{overdue && task.status !== TASK_STATUS_COMPLETED &&  'OVERDUE'}</Text>
+                <Text fontSize={12} textAlign='right' color={colors.red}>{overdue && !isCompleted &&  'OVERDUE'}</Text>
               </Box>
             </Flex>
             <hr />
             <Text fontSize={14} mb={30}>{`${task.description.slice(0, 100)}`}</Text>
             <Text>
-              {task.tags.map((tag, index) => {
+              {task.tags.map(tag => {
                 return (
-                  <Box key={index} variant='tag'>{tag}</Box>
+                  <Box key={tag} variant='tag'>{tag}</Box>
                 )
               })}
             </Text>
