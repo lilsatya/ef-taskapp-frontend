@@ -1,7 +1,6 @@
 import PouchyStore from 'pouchy-store'
 import config from '../../Config/pouchy-store'
 import validator from './validator'
-import { DB_TASKS } from '../../Config/db-names'
 import { TASK_STATUS_BACKLOG } from '../../Config/task-status'
 
 class Model extends PouchyStore {
@@ -9,8 +8,8 @@ class Model extends PouchyStore {
     return this._name
   }
 
-  setName(userId) {
-    this._name = `${DB_TASKS}-${userId}`
+  setName(name) {
+    this._name = name
   }
 
   get urlRemote() {

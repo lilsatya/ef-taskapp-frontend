@@ -9,6 +9,7 @@ import { selector as UserSelector } from '../../Redux/user'
 import { actions as AppActions, selector as AppSelector } from '../../Redux/app'
 import textContent from './text'
 import { TASK_STATUS_COMPLETED } from '../../Config/task-status'
+import { DB_TASKS } from '../../Config/db-names'
 
 // Components
 import Frame from '../../Components/Frame'
@@ -53,10 +54,8 @@ class Index extends React.PureComponent {
   }
 
   async componentDidUpdate() {
-    const { user } = this.props
-
-    if (!Model.isInitialized && user) {
-      Model.setName(user.id)	// to set databasename for model
+    if (!Model.isInitialized) {
+      Model.setName(DB_TASKS)
       await Model.initialize() // to initialize database locally by getting synced
     }
 

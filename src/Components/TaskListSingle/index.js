@@ -48,7 +48,7 @@ const Index = props => {
               </Box>
               
               <Box>
-                <Text fontSize={12} textAlign='right' mb={10}>{task.assignee.username}</Text>
+                <Text fontSize={12} textAlign='right' mb={10}>{task.assignee && task.assignee.username}</Text>
                 <Text fontSize={12} textAlign='right' color={colors.red}>{overdue && !isCompleted &&  'OVERDUE'}</Text>
               </Box>
             </Flex>
