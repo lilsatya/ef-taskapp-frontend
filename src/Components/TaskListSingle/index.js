@@ -55,7 +55,7 @@ const Index = props => {
             <hr />
             <Text fontSize={14} mb={30}>{`${task.description.slice(0, 100)}`}</Text>
             <Text>
-              {task.tags.map(tag => {
+              {task.tags && task.tags.map(tag => {
                 return (
                   <Box key={tag} variant='tag'>{tag}</Box>
                 )

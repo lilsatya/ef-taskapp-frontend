@@ -100,13 +100,13 @@ const Index = props => {
           <Flex mb={50} justifyContent='space-between'>
             <Box>
               <Text><b>{isCompleted ? 'Completed on :' : 'Due on :'}</b> {dateFormatter(isCompleted ? task.completedAt: task.dueDate)}</Text>
-              <Text>{task.assignee && `<b>Assignee: </b> ${task.assignee.username}`}</Text>
+              <Text>{task.assignee && (<><b>Assignee:</b> {task.assignee.username}</>)}</Text>
               <Text pt={8}><b>{LABEL_TASK_STATUS[task.status]}</b></Text>
               <Text pt={8} fontWeight='bold' fontSize={16} color={colors.red}>{overdue && !isCompleted && 'OVERDUE'}</Text>
             </Box>
             <Box>
               <Text textAlign='right'><b>Reported on:</b> {dateFormatter(task.createdAt)}</Text>
-              <Text textAlign='right'>{task.reporter && `<b>Reporter:</b> ${task.reporter.username}`}</Text>
+              <Text textAlign='right'>{task.reporter && (<><b>Reporter:</b> {task.reporter.username}</>)}</Text>
             </Box>
           </Flex>
           <Box mb={50}>

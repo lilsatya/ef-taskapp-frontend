@@ -23,10 +23,12 @@ const combineTags = (data, index = data.length - 1, tags = []) => {
   if (index < 0) {
     return tags
   } else {
-    for (let i = 0; i < data[index].tags.length; i++) {
-      const duplicate = tags.filter(tag => (tag === data[index].tags[i]))
-      if (duplicate.length < 1) {
-        tags.push(data[index].tags[i])
+    if (data[index].tags) {
+      for (let i = 0; i < data[index].tags.length; i++) {
+        const duplicate = tags.filter(tag => (tag === data[index].tags[i]))
+        if (duplicate.length < 1) {
+          tags.push(data[index].tags[i])
+        }
       }
     }
     return combineTags(data, index - 1, tags)
