@@ -1,8 +1,9 @@
 {
   "name": "ef-taskapp-frontend",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "homepage": "https://lilsatya.github.io/ef-taskapp-frontend",
   "private": false,
+  "license": "MIT",
   "dependencies": {
     "@rebass/forms": "^4.0.5",
     "add": "^2.0.6",
