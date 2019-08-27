@@ -16,7 +16,7 @@ RUN yarn
 COPY . .
 
 # get the correct .env file
-RUN rm .env.local
+RUN rm -rf .env.local || true
 ADD .env .env.local
 
 # deploy app to github
