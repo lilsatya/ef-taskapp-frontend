@@ -1,0 +1,2 @@
+(window["webpackJsonpef-taskapp-frontend"]=window["webpackJsonpef-taskapp-frontend"]||[]).push([[5],{388:function(e,n,t){"use strict";t.r(n);var a=t(0),c=t.n(a),u=t(3),o=t(10),r=t(12);n.default=Object(r.c)(null,function(e){return Object(o.b)({changePage:function(){return Object(u.d)("/")}},e)})(function(e){return c.a.createElement("div",null,c.a.createElement("h1",null,"about"),c.a.createElement("p",null,"Welcome tp about!"),c.a.createElement("button",{onClick:function(){return e.changePage()}},"Go to home page via redux"))})}}]);
+//# sourceMappingURL=5.5658bbec.chunk.js.map
