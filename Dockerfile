@@ -12,15 +12,12 @@ COPY package*.json ./
 # run yarn
 RUN yarn
 
-# Bundle app source
-COPY . .
-
 # get the correct .env file
 RUN rm -rf .env.local || true
 ADD .env .env.local
 
-# deploy app to github
-RUN yarn deploy
+# Bundle app source
+COPY . .
 
 # run development for docker run
 EXPOSE 3000
