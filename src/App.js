@@ -7,7 +7,7 @@ import store, { history } from './store'
 function App() {
   return (
     <Provider store={store}>
-      <BrowserRouter>
+      <BrowserRouter basename={window.location.host}>
         <Router history={history}>
           <Routes />
         </Router>
