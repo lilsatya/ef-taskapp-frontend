@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "b7a69177d93bc299992d465cee4bdc03",
+    "revision": "9328c0dfd8138b92567d6199c54f15e8",
     "url": "/ef-taskapp-frontend/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/ef-taskapp-frontend/static/css/2.4482b0e7.chunk.css"
   },
   {
-    "revision": "372e3ddf11bd8287c10b",
+    "revision": "d42edf7da0b4251c9a49",
     "url": "/ef-taskapp-frontend/static/css/4.2d4bc2cf.chunk.css"
   },
   {
@@ -24,8 +24,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/ef-taskapp-frontend/static/js/3.671a6c3c.chunk.js"
   },
   {
-    "revision": "372e3ddf11bd8287c10b",
-    "url": "/ef-taskapp-frontend/static/js/4.ff3a7455.chunk.js"
+    "revision": "d42edf7da0b4251c9a49",
+    "url": "/ef-taskapp-frontend/static/js/4.40ab70d7.chunk.js"
   },
   {
     "revision": "952d88351d96a59b6a54",
@@ -36,7 +36,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/ef-taskapp-frontend/static/js/main.c9ec40aa.chunk.js"
   },
   {
-    "revision": "b1dd7d81ce1cdbefccbe",
-    "url": "/ef-taskapp-frontend/static/js/runtime~main.20b4df6e.js"
+    "revision": "eb1816267ee9e44fe477",
+    "url": "/ef-taskapp-frontend/static/js/runtime~main.6f4453a0.js"
   }
 ]);
