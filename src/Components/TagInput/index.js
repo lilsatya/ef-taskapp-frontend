@@ -1,4 +1,5 @@
 import React from 'react'
+import { Text } from 'rebass'
 import TagsInput from 'react-tagsinput'
 import Autosuggest from 'react-autosuggest'
 import './_overwrite.css'
@@ -16,9 +17,9 @@ const Index = props => {
     const inputValue = (exProps.value && exProps.value.trim().toLowerCase()) || ''
     const inputLength = inputValue.length
 
-    let suggestions = props.suggestions.filter((suggestion) => {
+    let suggestions = (props.suggestions && props.suggestions.filter((suggestion) => {
       return suggestion.toLowerCase().slice(0, inputLength) === inputValue
-    })
+    })) || []
 
     return (
       <Autosuggest
@@ -26,7 +27,7 @@ const Index = props => {
         suggestions={suggestions}
         shouldRenderSuggestions={value => value && value.trim().length > 0}
         getSuggestionValue={suggestion => suggestion}
-        renderSuggestion={suggestion => <span>{suggestion}</span>}
+        renderSuggestion={suggestion => <Text>{suggestion}</Text>}
         inputProps={{...exProps, onChange: handleOnChange}}
         onSuggestionSelected={(e, {suggestion}) => {
           addTag(suggestion)
@@ -37,7 +38,7 @@ const Index = props => {
     )
   }
 
-  return <TagsInput renderInput={autocompleteRenderInput} value={props.value} onChange={props.onChange} />
+  return <TagsInput renderInput={autocompleteRenderInput} value={props.value || []} onChange={props.onChange} />
 }
 
 export default Index

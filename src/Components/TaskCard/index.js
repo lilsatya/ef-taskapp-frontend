@@ -6,7 +6,7 @@ import colors from '../../Theme/colors'
 import dateFormatter from '../../Utils/date-formatter'
 import { TASK_STATUS_BACKLOG, TASK_STATUS_IN_PROGRESS, TASK_STATUS_COMPLETED, LABEL_TASK_STATUS } from '../../Config/task-status'
 
-Modal.setAppElement('#root') // for accessibility
+Modal.setAppElement('body') // for accessibility
 
 const Index = props => {
   const { opened, onClose, onEdit, onMoveCard, onRemove, task } = props

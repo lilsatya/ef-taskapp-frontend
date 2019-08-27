@@ -12,7 +12,7 @@ import { selector as AppSelector } from '../../Redux/app'
 
 import ReactTags from '../TagInput'
 
-Modal.setAppElement('#root') // for accessibility
+Modal.setAppElement('body') // for accessibility
 
 const Index = props => {
   const { taskDetail, opened, onSubmit, onClose, userList, initialValues, tagList } = props
