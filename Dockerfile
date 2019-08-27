@@ -23,5 +23,5 @@ ENV NODE_ENV development
 # Bundle app source
 COPY . .
 
-EXPOSE 3001
+EXPOSE 5000
 CMD [ "serve", "build" ]
