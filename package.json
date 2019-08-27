@@ -1,7 +1,7 @@
 {
   "name": "ef-taskapp-frontend",
   "version": "0.1.0",
-  "homepage" : "https://lilsatya.github.io/ef-taskapp-frontend",
+  "homepage": "http://lilsatya.github.io/ef-taskapp-frontend",
   "private": false,
   "dependencies": {
     "@rebass/forms": "^4.0.5",
@@ -33,7 +33,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "yarn build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -51,6 +53,7 @@
     ]
   },
   "devDependencies": {
-    "babel-jest": "^24.9.0"
+    "babel-jest": "^24.9.0",
+    "gh-pages": "^2.1.1"
   }
 }

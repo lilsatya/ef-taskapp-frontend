@@ -12,15 +12,16 @@ COPY package*.json ./
 # run yarn
 RUN yarn
 
-# Set development environment as default
-ENV NODE_ENV development
-
 # Bundle app source
 COPY . .
 
-RUN yarn build
+# get the correct .env file
+RUN rm .env.local
+ADD .env .env.local
 
-COPY build .
+# deploy app to github
+RUN yarn deploy
 
-EXPOSE 5000
-CMD [ "serve", "build" ]
+# run development for docker run
+EXPOSE 3000
+CMD ["yarn", "start"]
