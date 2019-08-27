@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/ef-taskapp-frontend/precache-manifest.a28cf67a87f6bb7dc50c98b67d61ce92.js"
+  "/ef-taskapp-frontend/precache-manifest.a3c35e2ed8a506a6e7e7c4e5b6913992.js"
 );
 
 self.addEventListener('message', (event) => {

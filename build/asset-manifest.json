@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/ef-taskapp-frontend/static/css/main.34de6062.chunk.css",
-    "main.js": "/ef-taskapp-frontend/static/js/main.1ac212b6.chunk.js",
-    "main.js.map": "/ef-taskapp-frontend/static/js/main.1ac212b6.chunk.js.map",
+    "main.js": "/ef-taskapp-frontend/static/js/main.3b70fd21.chunk.js",
+    "main.js.map": "/ef-taskapp-frontend/static/js/main.3b70fd21.chunk.js.map",
     "runtime~main.js": "/ef-taskapp-frontend/static/js/runtime~main.20b4df6e.js",
     "runtime~main.js.map": "/ef-taskapp-frontend/static/js/runtime~main.20b4df6e.js.map",
     "static/css/2.4482b0e7.chunk.css": "/ef-taskapp-frontend/static/css/2.4482b0e7.chunk.css",
@@ -16,7 +16,7 @@
     "static/js/5.fab32d49.chunk.js": "/ef-taskapp-frontend/static/js/5.fab32d49.chunk.js",
     "static/js/5.fab32d49.chunk.js.map": "/ef-taskapp-frontend/static/js/5.fab32d49.chunk.js.map",
     "index.html": "/ef-taskapp-frontend/index.html",
-    "precache-manifest.a28cf67a87f6bb7dc50c98b67d61ce92.js": "/ef-taskapp-frontend/precache-manifest.a28cf67a87f6bb7dc50c98b67d61ce92.js",
+    "precache-manifest.a3c35e2ed8a506a6e7e7c4e5b6913992.js": "/ef-taskapp-frontend/precache-manifest.a3c35e2ed8a506a6e7e7c4e5b6913992.js",
     "service-worker.js": "/ef-taskapp-frontend/service-worker.js",
     "static/css/2.4482b0e7.chunk.css.map": "/ef-taskapp-frontend/static/css/2.4482b0e7.chunk.css.map",
     "static/css/4.2d4bc2cf.chunk.css.map": "/ef-taskapp-frontend/static/css/4.2d4bc2cf.chunk.css.map",
